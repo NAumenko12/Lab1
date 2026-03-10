@@ -1,50 +1,76 @@
 #include <iostream>
 #include <string>
+#include <clocale>
+
 using namespace std;
 
-void toUpperCase(string& str) {
+void toUpperCase(wstring& str) {
     for (int i = 0; i < str.length(); i++) {
-        if (str[i] >= 'a' && str[i] <= 'z')
-            str[i] = str[i] - 'a' + 'A';
-        else if (str[i] >= 'а' && str[i] <= 'я')
-            str[i] = str[i] - 'а' + 'А';
+        if (str[i] >= L'a' && str[i] <= L'z') {
+            str[i] = str[i] - L'a' + L'A';
+        }
+        else if (str[i] >= L'а' && str[i] <= L'я') {
+            str[i] = str[i] - L'а' + L'А';
+        }
+        else if (str[i] == L'ё') {
+            str[i] = L'Ё';
+        }
     }
 }
 
-void toLowerCase(string& str) {
+void toLowerCase(wstring& str) {
     for (int i = 0; i < str.length(); i++) {
-        if (str[i] >= 'A' && str[i] <= 'Z')
-            str[i] = str[i] - 'A' + 'a';
-        else if (str[i] >= 'А' && str[i] <= 'Я')
-            str[i] = str[i] - 'А' + 'а';
+        if (str[i] >= L'A' && str[i] <= L'Z') {
+            str[i] = str[i] - L'A' + L'a';
+        }
+        else if (str[i] >= L'А' && str[i] <= L'Я') {
+            str[i] = str[i] - L'А' + L'а';
+        }
+        else if (str[i] == L'Ё') {
+            str[i] = L'ё';
+        }
     }
+}
+
+int vowelsLength(wstring& str) {
+    wstring vowels = L"АЕЁИОУЫЭЮЯаеёиоуыэюяAEIOUYaeiouy";
+    int count = 0;
+
+    for (int i = 0; i < str.length(); i++) {
+        wchar_t c = str[i];
+        bool isVowel = false;
+
+        for (int j = 0; j < vowels.length(); j++) {
+            if (c == vowels[j]) {
+                isVowel = true;
+                break;
+            }
+        }
+
+        if (isVowel) {
+            count++;
+        }
+    }
+    return count;
 }
 
 int main() {
-    string s1 = "BaD InFo";
-    string s2 = "sSh Aes RSa keygEn";
-    string s3 = "HEllO PEOple";
+    setlocale(LC_ALL, ""); 
+    wcin.imbue(locale());
 
-    cout << "Вводные данные:" << endl;
-    cout << "s1: " << s1 << endl;
-    cout << "s2: " << s2 << endl;
-    cout << "s3: " << s3 << endl << endl;
-    string s1_up = s1, s2_up = s2, s3_up = s3;
-    toUpperCase(s1_up);
-    toUpperCase(s2_up);
-    toUpperCase(s3_up);
-    string s1_low = s1, s2_low = s2, s3_low = s3;
-    toLowerCase(s1_low);
-    toLowerCase(s2_low);
-    toLowerCase(s3_low);
-    cout << "После верхнего регистра:" << endl;
-    cout << "s1_up: " << s1_up << endl;
-    cout << "s2_up: " << s2_up << endl;
-    cout << "s3_up: " << s3_up << endl << endl;
-    cout << "После нижнего регистра:" << endl;
-    cout << "s1_low: " << s1_low << endl;
-    cout << "s2_low: " << s2_low << endl;
-    cout << "s3_low: " << s3_low << endl;
 
+    wstring userString;
+    wcout << L"String: ";
+    getline(wcin, userString);
+    wcout << L"You entered: " << userString << endl;
+
+    toUpperCase(userString);
+    wcout << L"To upper case: " << userString << endl;
+
+    toLowerCase(userString);
+    wcout << L"To lower case: " << userString << endl;
+
+    int vowelsCount = vowelsLength(userString);
+    wcout << L"Vowels length: " << vowelsCount << endl;
     return 0;
 }
