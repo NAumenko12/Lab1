@@ -18,6 +18,7 @@ void toUpperCase(wstring& str) {
     }
 }
 
+//ya ttyt
 void toLowerCase(wstring& str) {
     for (int i = 0; i < str.length(); i++) {
         if (str[i] >= L'A' && str[i] <= L'Z') {
