@@ -31,7 +31,7 @@ void toLowerCase(wstring& str) {
         }
     }
 }
-
+// 7236423
 int vowelsLength(wstring& str) {
     wstring vowels = L"АЕЁИОУЫЭЮЯаеёиоуыэюяAEIOUYaeiouy";
     int count = 0;
